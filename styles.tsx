@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     },
     scrollContainer: {
         flexGrow: 1,
-        paddingBottom: 20, // Adjust as needed
+        paddingBottom: 20,
     },
     inputContainer: {
         width: 300,
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
     sectionContainer: {
-        marginBottom: 5, // Add some margin between sections
+        marginBottom: 5,
     },
     transactionContainer: {
         backgroundColor: '#f0f0f0',

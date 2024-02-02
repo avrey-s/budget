@@ -7,7 +7,7 @@ export default function LoginForm({}) {
     const [password, setPassword] = useState('');
 
     const handleLogin = () => {
-        // Implement your login logic here
+        // Implement login functionality here
     };
 
     const handleRegister = () => {

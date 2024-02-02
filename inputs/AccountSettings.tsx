@@ -9,19 +9,19 @@ export default function UserSettings() {
     const [newEmail, setNewEmail] = useState('');
 
     const handleChangePassword = () => {
-        // Implement logic to change password
+        // write the logic to change password
     };
 
     const handleChangeEmail = () => {
-        // Implement logic to change email
+        // write the logic to change email
     };
 
     const handleDeleteAccount = () => {
-        // Implement logic to delete account
+        // write the logic to delete account
     };
 
     const handleLogout = () => {
-        // Implement logic to logout
+        // write the logic to logout
     };
 
     return (
