@@ -3,8 +3,10 @@ import React, { useState } from 'react';
 import styles from '../styles';
 
 export default function LoginForm({}) {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [form, setForm] = useState({
+        email: '',
+        password: '',
+    });
 
     const handleLogin = () => {
         // Implement login functionality here
@@ -21,18 +23,16 @@ export default function LoginForm({}) {
             <View style={styles.inputContainer}>
                 <TextInput
                     style={styles.input}
-                    onChangeText={setEmail}
-                    value={email}
+                    onChangeText={(email) => setForm((prevState) => ({ ...prevState, email }))}
                     placeholder="Email"
                 />
             </View>
             <View style={styles.inputContainer}>
                 <TextInput
                     style={styles.input}
-                    onChangeText={setPassword}
-                    value={password}
+                    onChangeText={(password) => setForm((prevState) => ({ ...prevState, password }))}
                     placeholder="Password"
-                    secureTextEntry={true}
+                    secureTextEntry
                 />
             </View>
             <TouchableOpacity

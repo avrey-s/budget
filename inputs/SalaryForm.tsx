@@ -4,8 +4,10 @@ import styles from '../styles';
 
 //salary form will contain the input for the salary and the date.
 export default function SalaryForm() {
-    const [salary, setSalary] = useState('');
-    const [date, setDate] = useState('');
+    const [form, setForm] = useState({
+        salary: '',
+        date: '',
+    });
 
     const handleSalary = () => {
         // Implement your salary logic here
@@ -16,16 +18,14 @@ export default function SalaryForm() {
             <View style={styles.inputContainer}>
                 <TextInput
                     style={styles.input}
-                    onChangeText={setSalary}
-                    value={salary}
+                    onChangeText={(salary) => setForm((prevState) => ({ ...prevState, salary }))}
                     placeholder="Salary"
                 />
             </View>
             <View style={styles.inputContainer}>
                 <TextInput
                     style={styles.input}
-                    onChangeText={setDate}
-                    value={date}
+                    onChangeText={(date) => setForm((prevState) => ({ ...prevState, date }))}
                     placeholder="Date"
                 />
             </View>

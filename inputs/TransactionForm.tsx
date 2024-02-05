@@ -4,24 +4,23 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import styles from '../styles';
 
 export default function TransactionForm() {
-    const [description, setDescription] = useState('');
-    const [amount, setAmount] = useState('');
     const [date, setDate] = useState(new Date());
     const [showDatePicker, setShowDatePicker] = useState(false);
 
-    const handleDateChange = (event: any, selectedDate: Date | undefined) => {
-        const currentDate = selectedDate || date;
-        setShowDatePicker(Platform.OS === 'ios');
-        setDate(currentDate);
-    };
+    const [form, setForm] = useState({
+        description: '',
+        amount: '',
+        date: '',
+    });
 
-    const handleDatePress = () => {
-        if (Platform.OS === 'ios'){
-            setShowDatePicker(true);
+    const handleDateChange = (event: any, selectedDate?: Date) => {
+        const currentDate = selectedDate || date;
+        //android = show date picker - due to having set the date if I was going to select the date again the date picker would not show
+        //ios doesnt need such logic
+        if (Platform.OS === 'android') {
+            setShowDatePicker(false);
         }
-        else {
-            setShowDatePicker(true);
-        }
+        setDate(currentDate);
     };
 
     const handleTransaction = () => {
@@ -33,22 +32,20 @@ export default function TransactionForm() {
             <View style={styles.inputContainer}>
                 <TextInput
                     style={styles.input}
-                    onChangeText={setDescription}
-                    value={description}
+                    onChangeText={(description) => setForm((prevState) => ({ ...prevState, description }))}
                     placeholder="Description"
                 />
             </View>
             <View style={styles.inputContainer}>
                 <TextInput
                     style={styles.input}
-                    onChangeText={setAmount}
-                    value={amount}
+                    onChangeText={(amount) => setForm((prevState) => ({ ...prevState, amount }))}
                     placeholder="Amount"
                 />
             </View>
                 <TouchableOpacity
     style={styles.inputContainer}
-    onPress={handleDatePress}
+    onPress={() => setShowDatePicker(true)}
 >
     <Text style={styles.input}>
         {date.toDateString()}

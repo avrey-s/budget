@@ -11,11 +11,9 @@ interface Transaction {
 }
 
 export default function TransactionView() {
-    // Sample data for past transactions
+    // Sample data for past transactions remove this and add your logic to display the data from db
     const [transactions, setTransactions] = useState<Transaction[]>([
-        { id: 1, description: 'Transaction 1', amount: 100, date: new Date('2024-01-29') },
-        { id: 2, description: 'Transaction 2', amount: 200, date: new Date('2024-01-28') },
-        { id: 3, description: 'Transaction 3', amount: 300, date: new Date('2024-01-27') },
+        /* pass in your transactions here */
     ]);
 
     const remainingBalance = () => {

@@ -3,10 +3,13 @@ import { Text, View, TextInput, TouchableOpacity, ScrollView, SafeAreaView } fro
 import styles from '../styles';
 
 export default function UserSettings() {
-    const [newPassword, setNewPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const [currentPassword, setCurrentPassword] = useState('');
-    const [newEmail, setNewEmail] = useState('');
+
+    const [form, setForm] = useState({
+        newPassword: '',
+        confirmPassword: '',
+        currentPassword: '',
+        newEmail: '',
+    });
 
     const handleChangePassword = () => {
         // write the logic to change password
@@ -32,28 +35,25 @@ export default function UserSettings() {
                 <View style={styles.inputContainer}>
                 <TextInput
                     style={styles.input}
-                    onChangeText={setNewPassword}
-                    value={newPassword}
+                    onChangeText={(newPassword) => setForm((prevState) => ({ ...prevState, newPassword }))}
                     placeholder="New Password"
-                    secureTextEntry={true}
+                    secureTextEntry
                 />
                 </View>
                 <View style={styles.inputContainer}>
                 <TextInput
                     style={styles.input}
-                    onChangeText={setConfirmPassword}
-                    value={confirmPassword}
+                    onChangeText={(confirmPassword) => setForm((prevState) => ({ ...prevState, confirmPassword }))}
                     placeholder="Confirm Password"
-                    secureTextEntry={true}
+                    secureTextEntry
                 />
                 </View>
                 <View style={styles.inputContainer}>
                 <TextInput
                     style={styles.input}
-                    onChangeText={setCurrentPassword}
-                    value={currentPassword}
+                    onChangeText={(currentPassword) => setForm((prevState) => ({ ...prevState, currentPassword }))}
                     placeholder="Current Password"
-                    secureTextEntry={true}
+                    secureTextEntry
                 />
                 </View>
                 <TouchableOpacity style={styles.button} onPress={handleChangePassword}>
@@ -66,8 +66,7 @@ export default function UserSettings() {
                 <View style={styles.inputContainer}>
                 <TextInput
                     style={styles.input}
-                    onChangeText={setNewEmail}
-                    value={newEmail}
+                    onChangeText={(newEmail) => setForm((prevState) => ({ ...prevState, newEmail }))}
                     placeholder="New Email"
                     keyboardType="email-address"
                 />
@@ -75,10 +74,9 @@ export default function UserSettings() {
                 <View style={styles.inputContainer}>
                 <TextInput
                     style={styles.input}
-                    onChangeText={setCurrentPassword}
-                    value={currentPassword}
+                    onChangeText={(currentPassword) => setForm((prevState) => ({ ...prevState, currentPassword }))}
                     placeholder="Current Password"
-                    secureTextEntry={true}
+                    secureTextEntry
                 />
                 </View>
                 <TouchableOpacity style={styles.button} onPress={handleChangeEmail}>
