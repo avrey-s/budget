@@ -1,18 +1,16 @@
 import React, { useState } from "react";
 import { Text, View, ScrollView, SafeAreaView } from "react-native";
-import styles from "../../components/Others/styles";
-import TransactionForm from "./TransactionForm";
+import styles from "../Styles/styles";
+import NewTransaction from "./NewTransaction";
+import { Transactions } from "../Types/typeconfig";
 
-interface Transaction {
-  id: number;
-  description: string;
-  amount: number;
-  date: Date;
-}
+//Some Minor Adjustments have been made to combine the types
+//as well as combine with NewTransaction form.
+//This file is not fully done - Avi
 
 export default function TransactionView() {
   // Sample data for past transactions remove this and add your logic to display the data from db
-  const [transactions, setTransactions] = useState<Transaction[]>([
+  const [transactions, setTransactions] = useState<Transactions[]>([
     /* pass in your transactions here */
   ]);
 
@@ -23,11 +21,11 @@ export default function TransactionView() {
     // return remaining balance
   };
 
-  const renderTransactionItem = ({ item }: { item: Transaction }) => (
+  const renderTransactionItem = ({ item }: { item: Transactions }) => (
     <View style={styles.transactionContainer}>
       <Text>{item.description}</Text>
-      <Text>{item.amount}</Text>
-      <Text>{item.date.toDateString()}</Text>
+      <Text>{item.cost}</Text>
+      <Text>{item.date}</Text>
     </View>
   );
 
@@ -38,7 +36,7 @@ export default function TransactionView() {
         {/*insert remaining salary balance here from the function above*/}
         <View style={styles.sectionContainer}>
           <Text style={styles.title}>Add Transaction</Text>
-          <TransactionForm />
+          <NewTransaction />
         </View>
 
         <View style={styles.sectionContainer}>
@@ -46,8 +44,8 @@ export default function TransactionView() {
           {transactions.map((transaction) => (
             <View key={transaction.id} style={styles.transactionContainer}>
               <Text>{transaction.description}</Text>
-              <Text>${transaction.amount}</Text>
-              <Text>{transaction.date.toDateString()}</Text>
+              <Text>${transaction.cost}</Text>
+              <Text>{transaction.date}</Text>
             </View>
           ))}
         </View>

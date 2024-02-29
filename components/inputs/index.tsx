@@ -1,6 +1,6 @@
 import SalaryForm from "./SalaryForm";
 import TransactionView from "./TransactionView";
-import TransactionForm from "./TransactionForm";
+import NewTransaction from "./NewTransaction";
 import AccountSettings from "./AccountSettings";
 
-export { SalaryForm, TransactionView, TransactionForm, AccountSettings };
+export { SalaryForm, TransactionView, NewTransaction, AccountSettings };

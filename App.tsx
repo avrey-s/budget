@@ -1,6 +1,6 @@
-import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import AllStacks from "./components/Navigation/AllStacks";
+import React from "react";
 
 export default function App() {
   return (
@@ -9,12 +9,3 @@ export default function App() {
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

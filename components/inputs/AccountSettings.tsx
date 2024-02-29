@@ -7,7 +7,7 @@ import {
   ScrollView,
   SafeAreaView,
 } from "react-native";
-import styles from "../Others/styles";
+import styles from "../Styles/styles";
 
 export default function UserSettings() {
   const [form, setForm] = useState({

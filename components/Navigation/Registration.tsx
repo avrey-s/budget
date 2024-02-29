@@ -3,9 +3,9 @@ import React, { useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   RegistrationStackPropsType,
-  UserRegistration,
-} from "../Others/typeconfig";
-import styles from "../Others/styles";
+  NewRegistration,
+} from "../Types/typeconfig";
+import styles from "../Styles/styles";
 
 const Registration = (props: RegistrationStackPropsType) => {
   const { navigation } = props;
@@ -14,12 +14,13 @@ const Registration = (props: RegistrationStackPropsType) => {
     navigation.push("Login");
   };
 
-  const [registrationForm, setRegistrationForm] = useState<UserRegistration>({
+  const [registrationForm, setRegistrationForm] = useState<NewRegistration>({
     username: "",
     email: "",
     password: "",
-    confirmPassword: "",
   });
+
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const onSignUp = async () => {
     if (!registrationForm.username) {
@@ -32,17 +33,17 @@ const Registration = (props: RegistrationStackPropsType) => {
       return;
     }
 
-    if (registrationForm.password !== registrationForm.confirmPassword) {
+    if (registrationForm.password !== confirmPassword) {
       Alert.alert("Password Error", "You must have matching passwords");
       return;
     }
 
     const getUsers = await AsyncStorage.getItem("users");
 
-    const parsedusers = JSON.parse(getUsers ?? "[]") as UserRegistration[];
+    const parsedusers = JSON.parse(getUsers ?? "[]") as NewRegistration[];
 
     const checkEmail = parsedusers.find(
-      (users: UserRegistration) => users.email === registrationForm.email
+      (users: NewRegistration) => users.email === registrationForm.email
     );
 
     if (checkEmail) {
@@ -51,7 +52,6 @@ const Registration = (props: RegistrationStackPropsType) => {
         username: "",
         email: "",
         password: "",
-        confirmPassword: "",
       });
       return;
     }
@@ -73,7 +73,7 @@ const Registration = (props: RegistrationStackPropsType) => {
           placeholder="username"
           value={registrationForm.username}
           onChangeText={(text) =>
-            setRegistrationForm((prevState: UserRegistration) => ({
+            setRegistrationForm((prevState: NewRegistration) => ({
               ...prevState,
               username: text,
             }))
@@ -86,7 +86,7 @@ const Registration = (props: RegistrationStackPropsType) => {
           placeholder="email"
           value={registrationForm.email}
           onChangeText={(text) =>
-            setRegistrationForm((prevState: UserRegistration) => ({
+            setRegistrationForm((prevState: NewRegistration) => ({
               ...prevState,
               email: text,
             }))
@@ -99,7 +99,7 @@ const Registration = (props: RegistrationStackPropsType) => {
           placeholder="password"
           value={registrationForm.password}
           onChangeText={(text) =>
-            setRegistrationForm((prevState: UserRegistration) => ({
+            setRegistrationForm((prevState: NewRegistration) => ({
               ...prevState,
               password: text,
             }))
@@ -110,13 +110,8 @@ const Registration = (props: RegistrationStackPropsType) => {
         <TextInput
           style={styles.input}
           placeholder="confirm password"
-          value={registrationForm.confirmPassword}
-          onChangeText={(text) =>
-            setRegistrationForm((prevState: UserRegistration) => ({
-              ...prevState,
-              confirmPassword: text,
-            }))
-          }
+          value={confirmPassword}
+          onChangeText={(text) => setConfirmPassword(text)}
         />
       </View>
       <TouchableOpacity style={styles.button} onPress={onSignUp}>

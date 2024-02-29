@@ -1,8 +1,8 @@
 import { Alert, Text, TextInput, TouchableOpacity, View } from "react-native";
 import React, { useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { AuthStackPropsType, UserLogin } from "../Others/typeconfig";
-import styles from "../Others/styles";
+import { AuthStackPropsType, UserLogin } from "../Types/typeconfig";
+import styles from "../Styles/styles";
 
 const Login = (props: AuthStackPropsType) => {
   const { navigation } = props;
@@ -16,6 +16,8 @@ const Login = (props: AuthStackPropsType) => {
     password: "",
   });
 
+  const [loggedIn, setLoggedIn] = useState(false);
+
   const loginUser = async () => {
     if (!authForm.email) {
       Alert.alert("Email Error", "You must include an email");
@@ -26,28 +28,34 @@ const Login = (props: AuthStackPropsType) => {
       Alert.alert("Password Error", "You must include a password");
       return;
     }
+    try {
+      const getUsers = await AsyncStorage.getItem("users");
 
-    const getUsers = await AsyncStorage.getItem("users");
+      const parsedUsers =
+        (JSON.parse(getUsers ?? "[]") as UserLogin[]) ?? ([] as UserLogin[]);
 
-    const parsedUsers =
-      (JSON.parse(getUsers ?? "[]") as UserLogin[]) ?? ([] as UserLogin[]);
+      const checkLogin = parsedUsers.find(
+        (users: UserLogin) =>
+          users.email === authForm.email && users.password === authForm.password
+      );
 
-    const checkLogin = parsedUsers.find(
-      (users: UserLogin) =>
-        users.email === authForm.email && users.password === authForm.password
-    );
+      if (!checkLogin) {
+        Alert.alert("Login error", "Try again");
 
-    if (!checkLogin) {
-      Alert.alert("Login error", "Try again");
-
-      setAuthForm({
-        email: "example@example.com",
-        password: "example123",
-      });
-      return;
+        setAuthForm({
+          email: "",
+          password: "",
+        });
+        return;
+      }
+      await AsyncStorage.setItem("loggedIn", "true");
+      const userLoggedIn = await AsyncStorage.getItem("loggedIn");
+      const loggedInParsed = JSON.parse(userLoggedIn ?? "false") as boolean;
+      setLoggedIn(loggedInParsed);
+      navigation.push("Home");
+    } catch (err: any) {
+      console.log(err.message);
     }
-
-    navigation.push("Home");
   };
 
   return (
