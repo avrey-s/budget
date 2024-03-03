@@ -1,16 +1,11 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import styles from './styles';
-import {RegistrationForm, LoginForm, SalaryForm, TransactionView, TransactionForm, AccountSettings} from './inputs';
-
+import { NavigationContainer } from "@react-navigation/native";
+import AllStacks from "./components/Navigation/AllStacks";
+import React from "react";
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <LoginForm/>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <AllStacks />
+    </NavigationContainer>
   );
 }
-
-
