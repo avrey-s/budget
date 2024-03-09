@@ -1,58 +1,60 @@
-import { Alert, Text, TextInput, TouchableOpacity, View } from "react-native";
-import React, { useState } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { AuthStackPropsType, UserLogin } from "../Types/typeconfig";
-import styles from "../Styles/styles";
+import React, { useState, useContext } from 'react';
+import { Alert, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AuthStackPropsType, UserLogin } from '../../Types/typeconfig';
+import ThemeContext from '../../theme/ThemeContext';
+import LightStyles from '../Styles/LightStyles';
+import DarkStyles from '../Styles/DarkStyles';
 
 const Login = (props: AuthStackPropsType) => {
   const { navigation } = props;
+  const { theme } = useContext(ThemeContext);
+  const styles = theme === 'light' ? LightStyles : DarkStyles;
 
   const goToRegistration = () => {
-    navigation.push("Registration");
+    navigation.push('Registration');
   };
 
   const [authForm, setAuthForm] = useState<UserLogin>({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   });
 
   const [loggedIn, setLoggedIn] = useState(false);
 
   const loginUser = async () => {
     if (!authForm.email) {
-      Alert.alert("Email Error", "You must include an email");
+      Alert.alert('Email Error', 'You must include an email');
       return;
     }
 
     if (!authForm.password) {
-      Alert.alert("Password Error", "You must include a password");
+      Alert.alert('Password Error', 'You must include a password');
       return;
     }
     try {
-      const getUsers = await AsyncStorage.getItem("users");
+      const getUsers = await AsyncStorage.getItem('users');
 
-      const parsedUsers =
-        (JSON.parse(getUsers ?? "[]") as UserLogin[]) ?? ([] as UserLogin[]);
+      const parsedUsers = (JSON.parse(getUsers ?? '[]') as UserLogin[]) ?? ([] as UserLogin[]);
 
       const checkLogin = parsedUsers.find(
-        (users: UserLogin) =>
-          users.email === authForm.email && users.password === authForm.password
+        (users: UserLogin) => users.email === authForm.email && users.password === authForm.password
       );
 
       if (!checkLogin) {
-        Alert.alert("Login error", "Try again");
+        Alert.alert('Login error', 'Try again');
 
         setAuthForm({
-          email: "",
-          password: "",
+          email: '',
+          password: '',
         });
         return;
       }
-      await AsyncStorage.setItem("loggedIn", "true");
-      const userLoggedIn = await AsyncStorage.getItem("loggedIn");
-      const loggedInParsed = JSON.parse(userLoggedIn ?? "false") as boolean;
+      await AsyncStorage.setItem('loggedIn', 'true');
+      const userLoggedIn = await AsyncStorage.getItem('loggedIn');
+      const loggedInParsed = JSON.parse(userLoggedIn ?? 'false') as boolean;
       setLoggedIn(loggedInParsed);
-      navigation.push("Home");
+      navigation.push('Home');
     } catch (err: any) {
       console.log(err.message);
     }
@@ -60,11 +62,11 @@ const Login = (props: AuthStackPropsType) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Login Form</Text>
       <View style={styles.inputContainer}>
         <TextInput
-          style={styles.input}
-          placeholder="email"
+          style={[styles.input, { color: theme === 'light' ? 'black' : 'white' }]} 
+          placeholderTextColor="#999" 
+          placeholder="Email"
           value={authForm.email}
           onChangeText={(text) =>
             setAuthForm((prevState: UserLogin) => ({
@@ -76,8 +78,9 @@ const Login = (props: AuthStackPropsType) => {
       </View>
       <View style={styles.inputContainer}>
         <TextInput
-          style={styles.input}
-          placeholder="password"
+          style={[styles.input, { color: theme === 'light' ? 'black' : 'white' }]}
+          placeholderTextColor="#999"
+          placeholder="Password"
           value={authForm.password}
           onChangeText={(text) =>
             setAuthForm((prevState: UserLogin) => ({
@@ -90,10 +93,7 @@ const Login = (props: AuthStackPropsType) => {
       <TouchableOpacity style={styles.button} onPress={loginUser}>
         <Text style={styles.buttonText}>Submit</Text>
       </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.registerButton}
-        onPress={goToRegistration}
-      >
+      <TouchableOpacity style={styles.registerButton} onPress={goToRegistration}>
         <Text style={styles.registerButtonText}>Need to Register</Text>
       </TouchableOpacity>
     </View>

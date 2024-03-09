@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Text, View, ScrollView, SafeAreaView } from "react-native";
-import styles from "../Styles/styles";
-import NewTransaction from "./NewTransaction";
-import { Transactions } from "../Types/typeconfig";
+import styles from "../Styles/LightStyles";
+import AddTransaction from "../Navigation/AddTransaction" ;
+import { Transactions } from "../../Types/typeconfig";
 
 //Some Minor Adjustments have been made to combine the types
 //as well as combine with NewTransaction form.
@@ -36,7 +36,7 @@ export default function TransactionView() {
         {/*insert remaining salary balance here from the function above*/}
         <View style={styles.sectionContainer}>
           <Text style={styles.title}>Add Transaction</Text>
-          <NewTransaction />
+          {/*<NewTransaction /> - fix this when coding we removed this unnecessary file and combined it in AddTransaction*/}
         </View>
 
         <View style={styles.sectionContainer}>

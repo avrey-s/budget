@@ -1,10 +1,11 @@
 import { StyleSheet } from "react-native";
 
-const styles = StyleSheet.create({
+const LightStyles = StyleSheet.create({
   container: {
     padding: 20,
     backgroundColor: "#fff",
     alignItems: "center",
+    flex: 1,
     justifyContent: "center",
   },
   scrollContainer: {
@@ -84,8 +85,6 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
 
-  //NewTransaction.tsx Styles
-
   newTransactionContainer: {
     padding: 20,
     backgroundColor: "#fff",
@@ -157,4 +156,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default styles;
+export default LightStyles;
