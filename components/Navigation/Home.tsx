@@ -1,12 +1,16 @@
 import { TouchableOpacity, Text, View } from "react-native";
-import React, { useState, useEffect } from "react";
-import { AppStackPropsType, RegisteredUser } from "../Types/typeconfig";
+import React, { useState, useEffect, useContext } from "react";
+import { AppStackPropsType, RegisteredUser } from "../../Types/typeconfig";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import styles from "../Styles/styles";
+import LightStyles from "../Styles/LightStyles";
+import DarkStyles from "../Styles/DarkStyles";
+import ThemeContext from '../../theme/ThemeContext';
+
 
 const Home = (props: AppStackPropsType) => {
   const { navigation } = props;
-
+  const { theme } = useContext(ThemeContext);
+  const styles = theme === 'light' ? LightStyles : DarkStyles;
   // for retrieving user data:
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState<RegisteredUser | null>(null);
@@ -45,19 +49,20 @@ const Home = (props: AppStackPropsType) => {
 
   return (
     <View style={styles.container}>
-      <View>
-        <View style={{ alignItems: "center" }}>
-          <TouchableOpacity style={styles.button} onPress={NewTransaction}>
-            <Text style={styles.buttonText}>New Transaction</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={{ alignItems: "center" }}>
-          <TouchableOpacity style={styles.buttonblue} onPress={Settings}>
-            <Text style={styles.buttonText}>Settings</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+  <View>
+    <View style={{ alignItems: "center" }}>
+      <TouchableOpacity style={styles.button} onPress={NewTransaction}>
+        <Text style={styles.buttonText}>New Transaction</Text>
+      </TouchableOpacity>
     </View>
+    <View style={{ alignItems: "center" }}>
+      <TouchableOpacity style={styles.buttonblue} onPress={Settings}>
+        <Text style={styles.buttonText}>Settings</Text>
+      </TouchableOpacity>
+    </View>
+  </View>
+</View>
+
   );
 };
 

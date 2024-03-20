@@ -1,14 +1,18 @@
 import { Alert, TouchableOpacity, Text, TextInput, View } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   RegistrationStackPropsType,
   NewRegistration,
-} from "../Types/typeconfig";
-import styles from "../Styles/styles";
+} from "../../Types/typeconfig";
+import ThemeContext from '../../theme/ThemeContext';
+import LightStyles from '../Styles/LightStyles';
+import DarkStyles from '../Styles/DarkStyles';
 
 const Registration = (props: RegistrationStackPropsType) => {
   const { navigation } = props;
+  const { theme } = useContext(ThemeContext);
+  const styles = theme === 'light' ? LightStyles : DarkStyles;
 
   const goToLogin = () => {
     navigation.push("Login");
@@ -66,10 +70,10 @@ const Registration = (props: RegistrationStackPropsType) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Registration Form</Text>
       <View style={styles.inputContainer}>
         <TextInput
-          style={styles.input}
+          style={[styles.input, { color: theme === 'light' ? 'black' : 'white' }]} 
+          placeholderTextColor="#999" 
           placeholder="username"
           value={registrationForm.username}
           onChangeText={(text) =>
@@ -82,7 +86,8 @@ const Registration = (props: RegistrationStackPropsType) => {
       </View>
       <View style={styles.inputContainer}>
         <TextInput
-          style={styles.input}
+          style={[styles.input, { color: theme === 'light' ? 'black' : 'white' }]} 
+          placeholderTextColor="#999" 
           placeholder="email"
           value={registrationForm.email}
           onChangeText={(text) =>
@@ -95,7 +100,8 @@ const Registration = (props: RegistrationStackPropsType) => {
       </View>
       <View style={styles.inputContainer}>
         <TextInput
-          style={styles.input}
+          style={[styles.input, { color: theme === 'light' ? 'black' : 'white' }]} 
+          placeholderTextColor="#999" 
           placeholder="password"
           value={registrationForm.password}
           onChangeText={(text) =>
@@ -108,7 +114,8 @@ const Registration = (props: RegistrationStackPropsType) => {
       </View>
       <View style={styles.inputContainer}>
         <TextInput
-          style={styles.input}
+          style={[styles.input, { color: theme === 'light' ? 'black' : 'white' }]} 
+          placeholderTextColor="#999" 
           placeholder="confirm password"
           value={confirmPassword}
           onChangeText={(text) => setConfirmPassword(text)}

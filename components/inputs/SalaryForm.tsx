@@ -1,6 +1,6 @@
 import { Text, View, TextInput, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
-import styles from "../Styles/styles";
+import styles from "../Styles/LightStyles";
 
 //salary form will contain the input for the salary and the date.
 export default function SalaryForm() {
